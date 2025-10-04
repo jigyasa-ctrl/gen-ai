@@ -1,0 +1,20 @@
+{
+  "name": "gen-ai",
+  "version": "1.0.0",
+  "description": "gen-ai concepts",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tavily/core": "^0.5.12",
+    "dotenv": "^16.6.1",
+    "groq-sdk": "^0.33.0",
+    "openai": "^6.1.0"
+  }
+}
