@@ -42,9 +42,18 @@ export async function generate(userMessage, threadId) {
         content: userMessage
     })
 
+    const MAX_RETRIES = 10;
+    const counter = 0;
+
   
 
         while (true) { // make it dynamic
+            // avoid infinite loop
+            if(counter > MAX_RETRIES){
+                return "I couldn't find the result, please try again.";
+            }
+            counter++;
+            
             const response = await groq.chat.completions.create({
                 model: "llama-3.3-70b-versatile",
                 messages: messages,
