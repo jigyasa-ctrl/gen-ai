@@ -10,5 +10,6 @@ Updated with Frontend - ChaD GPT
 <img width="1470" height="724" alt="Screenshot 2025-10-05 at 10 17 25 AM" src="https://github.com/user-attachments/assets/20792347-7463-4871-b9e8-f0e95d5b8a8e" />
 
 # how to run
-open a server at /frontend with live server
-open sbackend dever at 3001 at root with -> node server.js
+open a server at /frontend with live server.
+
+open backend dever at 3001 at root with -> node server.js
