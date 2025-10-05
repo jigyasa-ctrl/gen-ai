@@ -2,6 +2,9 @@ const input = document.getElementById("input");
 const container = document.querySelector("#chat-container");
 const ask = document.querySelector("#ask");
 
+let threadId = Date.now().toString(36) + Math.random().toString(36)
+threadId = threadId.substring(2, 8)
+
 input?.addEventListener("keyup", handleEnter);
 ask?.addEventListener("click", handleAsk);
 
@@ -13,6 +16,10 @@ async function handleAsk(e) {
     await generate(text);
 }
 
+const loading = document.createElement("div");
+loading.className="my-6 animate-pulse"
+loading.textContent = "Thinking..."
+
 async function generate(text) {
     // append user message to UI
     const userChat = document.createElement("div");
@@ -21,6 +28,8 @@ async function generate(text) {
     container.appendChild(userChat);
     input.value = '';
 
+    container.appendChild(loading)
+
     // send message to LLM
     const assistantReply = await callServer(text);
 
@@ -28,6 +37,8 @@ async function generate(text) {
     const assistantDiv = document.createElement("div");
     assistantDiv.className = "max-w-fit";
     assistantDiv.textContent = assistantReply;
+
+    loading.remove()
     container.appendChild(assistantDiv);
 }
 
@@ -38,6 +49,7 @@ async function callServer(inputText) {
             "Content-type": "application/json"
         },
         body: JSON.stringify({
+            threadId: threadId,
             message: inputText
         })
     });

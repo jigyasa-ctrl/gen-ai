@@ -1,12 +1,15 @@
 import 'dotenv/config';
 import Groq from "groq-sdk";
 import { tavily } from "@tavily/core";
+import NodeCache from 'node-cache';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 
-export async function generate(userMessage) {
-    const messages = [{ 
+const cache = new NodeCache({stdTTL: 60 * 60 * 24}) // 24 hours clear time / if 0 never clears
+
+export async function generate(userMessage, threadId) {
+    const baseMessages = [{ 
         role: "system", 
         content: `You are a smart personal assistant.
 
@@ -32,6 +35,7 @@ export async function generate(userMessage) {
                     
                     current date and time is ${new Date().toUTCString()}` 
     }];
+    const messages = cache.get(threadId) ?? baseMessages
 
     messages.push({
         role: "user",
@@ -70,6 +74,7 @@ export async function generate(userMessage) {
             const toolCalls = response.choices[0].message.tool_calls;
             
             if (!toolCalls) {
+                cache.set(threadId, messages)
                 return response.choices[0].message.content;
             }
             

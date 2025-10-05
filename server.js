@@ -7,8 +7,12 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/chat', async (req, res) => {
-    const {message} = req.body
-    const result = await generate(message)
+    const {message, threadId} = req.body
+    if(!message || !threadId){
+         res.status(400).json({message : "All feilds are required"})
+         return
+    }
+    const result = await generate(message, threadId)
     res.json({message: result})
 })
 
