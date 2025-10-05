@@ -12,4 +12,4 @@ Updated with Frontend - ChaD GPT
 # how to run
 open a server at /frontend with live server.
 
-open backend dever at 3001 at root with -> node server.js
+open backend server 3001 at root with -> node server.js
